@@ -40,9 +40,9 @@ const renderFeaturedItem = (item) => {
 };
 
 const renderFeaturedList = (list = itemsCatalog) => {
-    let itemsCatalog = list.map(item => renderFeaturedItem(item));
-    document.querySelector('.featuredItems').innerHTML = itemsCatalog.join('');
+    let featuredList = list.map(item => renderFeaturedItem(item));
+    document.querySelector('.featuredItems').innerHTML = featuredList.join('');
 }
 
-renderFeaturedList(itemsCatalog);
+renderFeaturedList();
 
