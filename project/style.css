@@ -35,6 +35,15 @@ body {
     color: #e8e8e8;
 } */
 
+.buttonDelete{
+    border: none;
+    background: none;
+}
+.fa {
+    font-size: 20px;
+}
+
+
 .userIcon,
 .bars {
     display: none;
