@@ -1,23 +1,4 @@
-/*const items = [
-    { id: 0, name: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: '$52.00' },
-    { id: 1, name: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: '$52.00' },
-    { id: 2, name: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: '$52.00' },
-    { id: 3, name: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: '$52.00' },
-    { id: 4, name: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: '$52.00' },
-    { id: 5, name: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: '$52.00' },
-
-];
-// this.items = [
-        //     { id: 0, title: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: 52.01 },
-        //     { id: 1, title: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: 52.01 },
-        //     { id: 2, title: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: 52.01 },
-        //     { id: 3, title: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: 52.01 },
-        //     { id: 4, title: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: 52.01 },
-        //     { id: 5, title: 'Mango People T-shirt', description: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.', price: 52.01 },
-
-        // ];
-
-API запрос 
+// API запрос
 
 // function makeGETRequest(url, callback) {
 //     let xhr = null;
@@ -37,7 +18,7 @@ API запрос
 //     xhr.open('GET', url, true);
 //     xhr.send();
 // }
-*/
+
 
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 const basketTotalEl = document.querySelector('.basketTotal');
@@ -115,8 +96,8 @@ class FeaturedList {
             .then((data) => {
                 this.items = data;
                 this.render();
+                this.clickAddItemsToCart()
             })
-            .then(this.addItemsToCart())
 
     }
     // Метод отображения карточек товаров
@@ -135,19 +116,14 @@ class FeaturedList {
             .then((response) => response.json())
             .catch((err) => console.log(err))
     }
-    // // Метод отслеживания события click на кнопке "Добавить" товара
-    addItemsToCart() {
-
+    // Метод отслеживания события click на кнопке "Добавить товар"
+    clickAddItemsToCart() {
         const addToCartBtns = document.querySelectorAll('button[data-productId]');
         addToCartBtns.forEach(button => {
-            button.addEventListener('click', targetAddToCartButtonId)
-            const productId = function targetAddToCartButtonId(event) {
-                event.target.getAttribute('data-productId')
-            }
-
-            basket.addProductToObjectBasket(productId)
-            basket.renderProductInBasket(productId)
-            // basket.addIntoBasket(productId)
+            button.addEventListener('click', (event) => {
+                const productId = event.target.getAttribute('data-productId')
+                basket.addProductToObjectBasket(productId)
+            })
         })
     }
 }
@@ -173,13 +149,14 @@ class BasketItem extends FeaturedItem {
             <div>
                 <span class="productTotalRow" data-productId="${this.id_product}">${this.price}$</span>
             </div>
-            <button class="buttonDelete" data-productId="${this.id_product}><i class="fa fa-trash" aria-hidden="true"></i></button>
+           <div class ="buttonDelete"> <i class="fa fa-trash"  data-productId="${this.id_product}" aria-hidden="true"></i></div>
         </div>
     `;
     }
 }
 
-// Класс, генерирующий список товаров в корзине. 
+// КЛАСС КОРЗИНА. 
+
 class Basket {
     constructor() {
         this.basketItems = [];
@@ -187,7 +164,10 @@ class Basket {
             .then((data) => {
                 this.basketItems = data;
                 this.renderBasketList(this.basketItems)
+                // this.addProductToObjectBasket()
+                this.clickToButtonDeleteOfBasket()
             })
+
     }
 
     getBasket() {
@@ -205,55 +185,28 @@ class Basket {
         let basketTotal = document.querySelector('.basketTotal');
         basketTotal.insertAdjacentHTML('beforebegin', basketList)
     }
-    clickToButtonDelete() {
-        const buttonsDelete = document.querySelectorAll('.buttonDelete')
-        buttonsDelete.forEach(button => {
-            button.addEventListener('click', eventClickDelete())
-            const deleteProductId = function eventClickDelete(event) {
-                event.target.getAttribute('data-productId')
-            }
-            basket.deleteBasketItems(deleteProductId)
-        })
-    }
 
-    deleteBasketItems(id) {
-
-        return fetch(`${API_URL}/deleteFromBasket.json`)
-            .then(response => response.json())
-            .then((response) => {
-                if (response.result !== 0) {
-                    this.basketItems.contents.filter((basketItem) => basketItem.id_product != id)
-                }
-            })
-            .catch((err) => console.log(err))
-    }
-
+    // Метод Добавления в процессе доработки
     addProductToObjectBasket(productId) {
-        if (!(productId in basket)) {
-            basket[productId] = 1;
-        } else {
-            basket[productId]++;
-        }
+        this.basketItems.contents.find(element => {
+            if (element.id_product == +productId) {
+                element.quantity++
+
+            } else {
+                this.basketItems.contents.push(element.id_product[+productId])
+
+            }
+            basket.renderBasketList()
+        })
+
     }
-    renderProductInBasket(productId) {
-        let productExist = document.querySelector(`.productQuantity[data-productId="${productId}"]`);
-        if (productExist) {
-            increaseProductQuantity(productId);
-            recalculateSumForProduct(productId);
-        }
-        // else {
-        //     renderNewProductInBasket(productId);
-        // }
-        function increaseProductQuantity(productId) {
-            const productQuantityEl = document.querySelector(`.productQuantity[data-productId="${productId}"]`);
-            productQuantityEl.textContent++;
-        }
-        function recalculateSumForProduct(productId) {
-            const productTotalRowEl = document.querySelector(`.productTotalRow[data-productId="${productId}"]`);
-            let totalPriceForRow = (basket[productId] * basketItem[productId].price).toFixed(2);
-            productTotalRowEl.textContent = totalPriceForRow;
-        }
-    }
+
+    //     function recalculateSumForProduct(productId) {
+    //         const productTotalRowEl = document.querySelector(`.productTotalRow[data-productId="${productId}"]`);
+    //         let totalPriceForRow = (basket[productId] * basketItem[productId].price).toFixed(2);
+    //         productTotalRowEl.textContent = totalPriceForRow;
+    //     }
+    // }
 
     // addIntoBasket(productId) {
     //     fetch(`${API_URL}/addToBasket.json`)
@@ -271,19 +224,44 @@ class Basket {
     //         })
 
     // }
+
+    // Метод Удаления товара из корзины
+
+    clickToButtonDeleteOfBasket() {
+        const buttonsDelete = document.querySelectorAll('.buttonDelete')
+        buttonsDelete.forEach(button => {
+            button.addEventListener('click', (event) => {
+                let deleteProductId = event.target.getAttribute('data-productId')
+                button.parentNode.remove();
+                basket.deleteBasketItems(deleteProductId)
+            })
+
+        })
+    }
+
+    deleteBasketItems(id) {
+
+        return fetch(`${API_URL}/deleteFromBasket.json`)
+            .then(response => response.json())
+            .then((response) => {
+                if (response.result !== 0) {
+                    this.basketItems.contents.filter((basketItem) => basketItem.id_product != id)
+                }
+            })
+            .catch((err) => console.log(err))
+    }
+
 }
 
 const list = new FeaturedList();
 list.fetchItems()
-list.addItemsToCart()
+    .then(list.clickAddItemsToCart())
+
 const basket = new Basket()
 basket.getBasket()
-// basket.addIntoBasket()
+    .then(list.clickAddItemsToCart())
+// .then(basket.clickToButtonDeleteOfBasket())
 
-basket.clickToButtonDelete()
-basket.addProductToObjectBasket()
-basket.renderProductInBasket()
-
-
+basket.clickToButtonDeleteOfBasket()
 
 // https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/addToBasket.json

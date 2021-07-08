@@ -36,12 +36,14 @@ body {
 } */
 
 .buttonDelete{
-    border: none;
-    background: none;
+  color:#6f6e6e;
+  margin-left: 30px;
+
 }
-.fa {
-    font-size: 20px;
+.buttonDelete:hover{
+    color: #ef5b70;
 }
+
 
 
 .userIcon,
