@@ -18,6 +18,11 @@ input{
     height: 30px;
     color: rgb(7, 58, 58);
 }
+textarea{
+    margin-bottom: 20px;
+    color: rgb(7, 58, 58);
+    width: 500px;
+}
 
 .button{
     background-color: rgba(49, 150, 149, 0.667);
