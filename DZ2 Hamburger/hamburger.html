@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Собери себе гамбургер по вкусу!</h1>
+
+    <script>
+        class Hamburger {
+            constructor(size, stuffing, mayo, flavoring) {
+                this.size = {
+                    small: { price: 50, calories: 20 },
+                    big: { price: 100, calories: 40 },
+                }
+                this.stuffing = {
+                    cheese: { price: 10, calories: 20 },
+                    salad: { price: 20, calories: 5 },
+                    potato: { price: 15, calories: 10 },
+                }
+                this.mayo = { price: 20, calories: 5 }
+                this.flavoring = { price: 15, calories: 0 }
+            }
+
+            addFlavoring(flavoring) {
+                if (toppingFlavoring === 'да') {
+                    return this.flavoring
+                }
+            }
+
+            addMayo(mayo) {
+                if (toppingMayo === 'да') {
+                    return this.mayo
+                }
+            }
+
+            removeTopping(topping) {
+
+            }
+            getToppings(topping) {
+
+            }
+            getSize() {
+                if (selectedSize === 'большой') {
+                    return this.size = this.size.big
+                }
+                if (selectedSize === 'маленький') {
+                    return this.size = this.size.small
+                }
+            }
+            getStuffing() {
+                if (selectedStuffing === 'сыр') {
+                    return this.stuffing = this.stuffing.cheese
+                }
+                if (selectedStuffing === 'салат') {
+                    return this.stuffing = this.stuffing.salad
+                }
+                if (selectedStuffing === 'картофель') {
+                    return this.stuffing = this.stuffing.potato
+                }
+
+            }
+            calculatePrice() {
+                let price = this.size.price + this.stuffing.price + this.flavoring.price + this.mayo.price + ' руб.'
+                return price;
+            }
+            calculateCalories() {
+                let calories = this.size.calories + this.stuffing.calories + this.flavoring.calories + this.mayo.calories + ' калорий'
+                return calories;
+            }
+        }
+        let selectedSize = prompt('Какого размера вы хотите гамбургер? Большой или маленький?')
+        let selectedStuffing = prompt('Выберите одну из начинкок гамбургера: сыр, салат или картофель?')
+        let toppingMayo = prompt('Вы желаете добавть майонез?(Да/Нет)')
+        let toppingFlavoring = prompt('Вы желаете добавить приправу?(Да/Нет)')
+
+
+        const orderHamburger = new Hamburger(selectedSize, selectedStuffing);
+        orderHamburger.getSize();
+        orderHamburger.getStuffing();
+        orderHamburger.addFlavoring();
+        orderHamburger.addMayo();
+
+        alert(`Ваш гамбургер стоит ${orderHamburger.calculatePrice()} и в нем всего-то ${orderHamburger.calculateCalories()}!`)
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <form action="">
+            <input type="text" placeholder="Иван Иванов">
+            <input type="tel" placeholder="+7(000)000-0000">
+            <input type="email" placeholder="mymail@mail.ru">
+            <textarea name="" id="" cols="30" rows="10" placeholder="Сообщите нам о своих пожеланиях"></textarea>
+            <!-- <input type="text" placeholder="Сообщите нам о своих пожеланиях"> -->
+            <input class="button" type="submit" value="Отправить">
+        </form>
+    </div>
+    <script>
+        // Задание 1-2
+        const text = "'Lorem ipsum dolor sit amet', 'consectetur adipiscing elit, sed do eiusmod tempor incididunt' ut lab'ore'"
+        console.log(text.replace(/\B'\b|\b'\B|^'/g, '"'))
+
+        // Задание 3
+
+        // в процессе
+
+
+    </script>
+</body>
+
+</html>
+Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить. При нажатии на кнопку Отправить
+произвести валидацию полей следующим образом:
+a. Имя содержит только буквы.
+b. Телефон имеет вид +7(000)000-0000.
+c. E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+d. Текст произвольный.
+e. Если одно из полей не прошло валидацию, необходимо выделить это поле красной рамкой и сообщить пользователю об
+ошибке.
